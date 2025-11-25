@@ -243,3 +243,75 @@ The skincare AI app market is highly competitive with clear leaders in specific 
 3. ML Model Development Strategy
 4. UI/UX Design System Creation
 5. MVP Feature Prioritization
+
+---
+
+## Feature Comparison Matrix
+
+### Core Features Across Top 5 Competitors
+
+| Feature | Our App | Perfect Corp | Skinive | TroveSkin | YouCam |
+|---------|---------|--------------|---------|-----------|--------|
+| AI Skin Analysis | ✅ Advanced | ✅ Basic | ✅ Advanced | ✅ Basic | ✅ Basic |
+| On-Device Processing | ✅ Yes | ❌ No | ❌ No | ❌ No | ❌ No |
+| Progress Tracking | ✅ AI-powered | ⚠️ Limited | ✅ Yes | ✅ Yes | ⚠️ Limited |
+| Product Recommendations | ✅ Personalized | ✅ Brand-tied | ⚠️ Generic | ✅ Yes | ✅ Brand-tied |
+| Dermatologist Connection | ✅ Integrated | ❌ No | ✅ Yes | ❌ No | ❌ No |
+| Routine Builder | ✅ AI-generated | ⚠️ Manual | ❌ No | ✅ Yes | ⚠️ Limited |
+| Privacy Focus | ✅ GDPR+ | ⚠️ Basic | ⚠️ Basic | ⚠️ Basic | ⚠️ Basic |
+
+---
+
+## Pricing Analysis
+
+### Competitor Pricing Tiers
+
+| App | Free Tier | Premium Monthly | Premium Annual | Enterprise |
+|-----|-----------|-----------------|----------------|------------|
+| Perfect Corp | Limited scans | $9.99 | $59.99 | Contact |
+| Skinive | 3 scans/month | $7.99 | $49.99 | N/A |
+| TroveSkin | Basic features | $4.99 | $29.99 | N/A |
+| YouCam | Try features | $5.99 | $35.99 | Contact |
+| **Our Target** | Full analysis | **$6.99** | **$49.99** | **$199/mo** |
+
+### Pricing Strategy
+
+1. **Freemium Model**: Unlimited basic scans, limited advanced features
+2. **Premium Tier**: Full AI analysis, progress tracking, product recommendations
+3. **Professional Tier**: API access, white-label options, dermatologist dashboard
+
+---
+
+## Differentiation Strategy
+
+### Unique Value Propositions
+
+| Differentiator | Description | Competitor Gap |
+|---------------|-------------|----------------|
+| **Privacy-First AI** | On-device processing, no cloud uploads | All competitors process in cloud |
+| **Dermatologist Network** | In-app consultations with board-certified derms | Only Skinive has limited version |
+| **Transparent AI** | Explainable results with confidence scores | No competitor offers this |
+| **Multi-Concern Analysis** | Simultaneous detection of 10+ skin concerns | Most apps analyze 3-5 concerns |
+| **Routine Optimization** | AI learns from user feedback to improve routines | Static recommendations elsewhere |
+
+### Competitive Moat Building
+
+```
+Phase 1 (Launch): Privacy + Basic AI analysis
+Phase 2 (6 months): Dermatologist network + Progress tracking
+Phase 3 (12 months): Brand partnerships + Community features
+Phase 4 (18 months): International expansion + Enterprise API
+```
+
+---
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|--------|
+| 1.0 | Nov 25, 2025 | Initial competitive research |
+| 2.0 | Nov 25, 2025 | Added feature matrix, pricing analysis, differentiation strategy |
+
+---
+
+*Research by ML & Product Research Swarm*
