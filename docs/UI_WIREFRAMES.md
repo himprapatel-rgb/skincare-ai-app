@@ -1926,7 +1926,364 @@ This section illustrates the complete navigation structure and user flows throug
 
 ---
 
-## 13. Conclusion
+## 13. Additional Industry-Standard Screens (Based on ChatGPT Review)
+
+This section adds screens and flows identified from industry-leading apps like SkinVision, TroveSkin, YUKA, PerfectCorp, and Aysa.
+
+### 13.1 AI Confidence & Transparency
+
+#### 13.1.1 AI Confidence Score Screen
+
+```
+┌─────────────────────────┐
+│  ←  Analysis Confidence  │  Header
+├─────────────────────────┤
+│                         │
+│  🤖 AI Confidence Score  │  Title
+│  ─────────────────────  │
+│                         │
+│  ┌───────────────────┐  │
+│  │                   │  │
+│  │    🟢 92%          │  │  Confidence
+│  │   High Confidence │  │  score circle
+│  │                   │  │
+│  └───────────────────┘  │
+│                         │
+│  What this means:       │  Explanation
+│  ───────────────────     │
+│  Our AI analyzed your   │
+│  skin photo and is 92%  │
+│  confident in detecting │
+│  the following concerns.│
+│                         │
+│  Detected Concerns:     │  Section
+│  ───────────────────     │
+│  ┌───────────────────┐  │
+│  │ 🔴 Acne       95% │  │  High conf.
+│  │ 🟠 Dark Spots 87% │  │  Med conf.
+│  │ 🟡 Pores     72% │  │  Lower conf.
+│  └───────────────────┘  │
+│                         │
+│  ⚠️ Important Disclaimer │  Legal
+│  ─────────────────────  │
+│  This is not medical    │
+│  advice. Consult a      │
+│  dermatologist for      │
+│  professional diagnosis.│
+│                         │
+│  ┌───────────────────┐  │
+│  │ [Find Dermatologist]│  │  CTA button
+│  └───────────────────┘  │
+│                         │
+└─────────────────────────┘
+```
+
+**Specifications:**
+- Confidence score displayed as percentage in colored circle
+- Color coding: Green (>85%), Yellow (60-85%), Red (<60%)
+- Each concern shows individual confidence level
+- Medical disclaimer always visible
+- "Find Dermatologist" button links to external directory
+- "How AI works" expandable section
+
+**Flow:**
+- Accessed from Analysis Results screen
+- Tap concern → Shows detailed explanation
+- Tap "How AI works" → Expands explanation
+- Tap "Find Dermatologist" → Opens map/directory
+
+---
+
+### 13.2 Skin Quiz / Onboarding Questionnaire
+
+```
+┌─────────────────────────┐
+│  ←  Skin Quiz    1/5    │  Progress
+├─────────────────────────┤
+│  [█████░░░░░░░░░░░░░░]  │  Progress bar
+│                         │
+│  🧔 What's your         │  Question
+│  skin type?             │
+│  ─────────────────────  │
+│                         │
+│  ┌───────────────────┐  │
+│  │ 💧 Oily           │  │  Option 1
+│  │ Shiny T-zone,    │  │
+│  │ enlarged pores   │  │
+│  └───────────────────┘  │
+│                         │
+│  ┌───────────────────┐  │
+│  │ 🌵 Dry            │  │  Option 2
+│  │ Tight, flaky,    │  │
+│  │ rough texture    │  │
+│  └───────────────────┘  │
+│                         │
+│  ┌───────────────────┐  │
+│  │ 🌀 Combination    │  │  Option 3
+│  │ Oily T-zone,     │  │
+│  │ dry cheeks       │  │
+│  └───────────────────┘  │
+│                         │
+│  ┌───────────────────┐  │
+│  │ ✨ Normal         │  │  Option 4
+│  │ Balanced, few    │  │
+│  │ imperfections    │  │
+│  └───────────────────┘  │
+│                         │
+│  [Skip]    [I don't know]│  Secondary
+│                         │
+└─────────────────────────┘
+```
+
+**Quiz Questions (5 screens):**
+1. Skin Type (Oily/Dry/Combination/Normal)
+2. Primary Concerns (Acne/Aging/Dark spots/Redness - multi-select)
+3. Sensitivity Level (Very sensitive/Somewhat/Not sensitive)
+4. Lifestyle (Sleep hours, water intake, sun exposure)
+5. Current Routine (Has routine/No routine/Wants to start)
+
+**Specifications:**
+- Progress bar shows current question
+- Large tappable cards for each option
+- "Skip" and "I don't know" options available
+- Results personalize all recommendations
+- Can be retaken from Settings anytime
+
+---
+
+### 13.3 Empty States, Error States & Loading States
+
+#### 13.3.1 Empty States
+
+```
+┌─────────────────────────┐
+│                         │
+│       ┌───────┐         │  Illustration
+│       │  📷  │         │  (friendly
+│       │  ✨  │         │   graphic)
+│       └───────┘         │
+│                         │
+│   No Skin Analyses Yet  │  Title
+│   ───────────────────   │
+│                         │
+│   Take your first skin  │  Description
+│   photo to get          │
+│   personalized insights │
+│   and recommendations.  │
+│                         │
+│  ┌───────────────────┐  │
+│  │ [📷 Start Analysis]│  │  Primary CTA
+│  └───────────────────┘  │
+│                         │
+└─────────────────────────┘
+```
+
+**Empty State Examples:**
+| Screen | Title | CTA |
+|--------|-------|-----|
+| Progress | No analyses yet | Start your first scan |
+| Routines | No routines created | Create your routine |
+| Products | No products saved | Scan a product |
+| Gallery | No photos yet | Take a photo |
+
+#### 13.3.2 Error States
+
+```
+┌─────────────────────────┐
+│                         │
+│       ┌───────┐         │  Error icon
+│       │  ⚠️  │         │
+│       └───────┘         │
+│                         │
+│     Low Light Detected  │  Error title
+│     ─────────────────   │
+│                         │
+│   Move to a brighter    │  Explanation
+│   area for accurate     │
+│   skin analysis.        │
+│                         │
+│  ┌───────────────────┐  │
+│  │   [Try Again]     │  │  Primary CTA
+│  └───────────────────┘  │
+│                         │
+└─────────────────────────┘
+```
+
+**Error State Types:**
+| Error | Icon | Message | Action |
+|-------|------|---------|--------|
+| Low light | 💡 | Move to brighter area | Try Again |
+| Face not detected | 👤 | Position face in frame | Retry |
+| Network error | 📶 | Check your connection | Retry |
+| Server error | ⚠️ | Something went wrong | Contact Support |
+| Camera access | 📷 | Camera permission needed | Open Settings |
+
+#### 13.3.3 Loading States
+
+```
+┌─────────────────────────┐
+│                         │
+│       ┌───────┐         │
+│       │ ◔    │         │  Animated
+│       │   AI │         │  scanning
+│       └───────┘         │  circle
+│                         │
+│    Analyzing Your Skin  │  Title
+│    ──────────────────   │
+│                         │
+│  [███████░░░░░░░░] 45%  │  Progress bar
+│                         │
+│  ✔ Face detected         │  Step 1 done
+│  ✔ Lighting verified     │  Step 2 done
+│  ◔ Analyzing concerns... │  Current step
+│  ○ Generating insights   │  Pending step
+│                         │
+│  This takes about 5     │  Time estimate
+│  seconds                │
+│                         │
+└─────────────────────────┘
+```
+
+**Loading State Types:**
+- AI Analysis: Multi-step progress with checkmarks
+- Ingredient Scan: Classifier loading indicator
+- Photo Upload: Upload percentage
+- Skeleton Screens: Gray placeholders for lists
+- Pull-to-Refresh: Spinner at top
+
+---
+
+### 13.4 Gamification & Habit Streaks
+
+```
+┌─────────────────────────┐
+│  ←  Your Achievements    │  Header
+├─────────────────────────┤
+│                         │
+│  🔥 Current Streak       │  Section
+│  ───────────────────     │
+│  ┌───────────────────┐  │
+│  │                   │  │
+│  │    🔥 14 Days      │  │  Streak count
+│  │   Routine Streak  │  │
+│  │                   │  │
+│  │ M  T  W  Th F  Sa Su│  │  Week view
+│  │ ✅ ✅ ✅ ✅ ✅ ✅ ○ │  │
+│  └───────────────────┘  │
+│                         │
+│  🏆 Badges Earned        │  Section
+│  ───────────────────     │
+│  ┌───┐ ┌───┐ ┌───┐     │
+│  │🌟│ │💧│ │🎯│     │  Badge icons
+│  └───┘ └───┘ └───┘     │
+│  First  7-Day  Perfect  │  Badge names
+│  Scan  Streak  Week    │
+│                         │
+│  🎖️ Your Level           │  Section
+│  ───────────────────     │
+│  ┌───────────────────┐  │
+│  │ Level 5: Skin Pro  │  │  Current level
+│  │ [███████░░░] 70%  │  │  XP progress
+│  │ 300 XP to Level 6 │  │
+│  └───────────────────┘  │
+│                         │
+└─────────────────────────┘
+```
+
+**Gamification Elements:**
+| Action | XP Earned | Badge Unlocked |
+|--------|-----------|----------------|
+| Complete routine | +10 XP | 🌟 First Routine |
+| 7-day streak | +50 XP | 🔥 Week Warrior |
+| First skin scan | +20 XP | 📷 Selfie Pro |
+| Scan 10 products | +30 XP | 🔍 Ingredient Guru |
+| Perfect month | +100 XP | 🏆 Skin Champion |
+
+**Specifications:**
+- Streak counter resets at midnight
+- Weekly calendar view shows completion
+- Badges displayed in profile
+- Level progression with XP system
+- Celebration animation on milestone
+
+---
+
+### 13.5 Accessibility Checklist (WCAG 2.1 AA)
+
+#### Typography
+- [ ] Minimum font size: 16sp (body text)
+- [ ] Line height: 1.5x font size minimum
+- [ ] Font scaling: Support up to 200% zoom
+- [ ] Dyslexia-friendly: Left-aligned text, avoid justified
+
+#### Color & Contrast
+- [ ] Text contrast ratio: 4.5:1 minimum (normal text)
+- [ ] Large text contrast: 3:1 minimum (18sp+ or 14sp bold)
+- [ ] No color-only information (add icons/text)
+- [ ] Dark mode support with proper contrast
+
+#### Touch Targets
+- [ ] Minimum target size: 44x44 dp (iOS) / 48x48 dp (Android)
+- [ ] Spacing between targets: 8dp minimum
+- [ ] Touch feedback: Visual ripple or highlight
+
+#### Screen Reader Support
+- [ ] All images have `contentDescription` / `accessibilityLabel`
+- [ ] Form fields have labels
+- [ ] Buttons have descriptive labels
+- [ ] Focus order is logical
+
+#### Motion & Animation
+- [ ] Respect `Reduce Motion` system setting
+- [ ] No auto-playing videos without controls
+- [ ] Animations can be paused/stopped
+- [ ] No content that flashes >3 times/second
+
+#### Navigation
+- [ ] Skip navigation option for screen readers
+- [ ] Consistent navigation patterns
+- [ ] Current location always indicated
+- [ ] Back button always functional
+
+---
+
+### 13.6 Microinteractions & Animations Specification
+
+#### Camera Flow Animations
+| Element | Animation | Duration | Easing |
+|---------|-----------|----------|--------|
+| Face outline | Pulsing glow | 1.5s | ease-in-out |
+| Capture button | Scale + haptic | 150ms | ease-out |
+| Processing | Rotating circle | continuous | linear |
+| Results reveal | Fade + slide up | 400ms | ease-out |
+
+#### Progress & Charts
+| Element | Animation | Duration | Easing |
+|---------|-----------|----------|--------|
+| Progress bar | Width growth | 800ms | ease-out |
+| Score circle | Counter + draw | 1.2s | ease-in-out |
+| Chart lines | Path draw | 600ms | ease-out |
+| Before/after | Slider elastic | 200ms | spring |
+
+#### Routine Builder
+| Element | Animation | Duration | Easing |
+|---------|-----------|----------|--------|
+| Drag handle | Scale on press | 100ms | ease-out |
+| Reorder | Spring bounce | 300ms | spring |
+| Delete swipe | Slide + fade | 250ms | ease-out |
+| Checkmark | Draw + bounce | 400ms | spring |
+
+#### Celebrations
+| Milestone | Animation | Duration |
+|-----------|-----------|----------|
+| Streak achieved | Confetti burst | 2s |
+| Badge unlocked | Scale + glow | 600ms |
+| Level up | Full-screen overlay | 1.5s |
+| Perfect week | Fireworks | 2.5s |
+
+---
+
+## 14. Conclusion (Updated)
 
 This UI wireframe document provides a comprehensive blueprint for the Skincare AI App, covering:
 
@@ -1948,10 +2305,8 @@ All screens are designed to be:
 - Performant on mid-range devices
 - Consistent with modern mobile UI patterns
 
----
-
-**Document Version:** 1.0  
-**Last Updated:** December 2024  
+**Document Version:** 2.0 (Industry-Standard Update)  
+**Last Updated:** November 25, 2025  
 **Author:** Skincare AI Development Team  
 **Status:** Complete  
-```
+**Reviewed with:** ChatGPT for industry best practices  
