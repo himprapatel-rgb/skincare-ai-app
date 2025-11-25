@@ -1,204 +1,279 @@
-"""Skincare AI App - FastAPI Backend
+"""Skincare AI App - FastAPI Backend Main Application
 
-Main application entry point following TECHNOLOGY_STACK.md specifications.
-Framework: FastAPI 0.110+ with async support
-Server: Uvicorn (ASGI)
+Industry-standard FastAPI application with async support,
+microservices architecture, and comprehensive error handling.
 
+Author: AI Engineering Team
 Version: 1.0.0
+Last Updated: November 25, 2025
 """
 
+import sys
+import logging
 from contextlib import asynccontextmanager
-from typing import Dict, Any
+from typing import AsyncGenerator
 
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
 import uvicorn
 
+from app.core.config import settings
+from app.core.logging import setup_logging
+from app.core.database import init_db, close_db
+from app.core.cache import init_redis, close_redis
+from app.core.monitoring import init_monitoring
 
-# ===========================================
-# Pydantic Models (Request/Response Schemas)
-# ===========================================
+# Import routers from microservices
+from app.api.v1.routes import auth, analysis, routine, progress, ingredients
+from app.api.v1.routes import users, notifications, dermatologist
 
-class HealthResponse(BaseModel):
-    """Health check response model."""
-    status: str = Field(..., description="Service status")
-    version: str = Field(..., description="API version")
-    services: Dict[str, str] = Field(default_factory=dict)
+# Setup logging
+setup_logging()
+logger = logging.getLogger(__name__)
 
-
-class SkinAnalysisRequest(BaseModel):
-    """Skin analysis request model."""
-    user_id: str = Field(..., description="User identifier")
-    include_recommendations: bool = Field(default=True)
-
-
-class SkinConcernResult(BaseModel):
-    """Individual skin concern result."""
-    concern: str
-    confidence: float = Field(..., ge=0, le=1)
-    severity: str = Field(..., description="low, medium, high")
-
-
-class SkinAnalysisResponse(BaseModel):
-    """Skin analysis response model."""
-    analysis_id: str
-    skin_type: str
-    concerns: list[SkinConcernResult]
-    recommendations: list[str] = []
-    processed_at: str
-
-
-# ===========================================
-# Application Lifespan (Startup/Shutdown)
-# ===========================================
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
-    """Manage application lifespan - startup and shutdown events."""
-    # Startup: Initialize ML models, database connections
-    print("Starting Skincare AI Backend...")
-    # TODO: Load ML models (ONNX format)
-    # TODO: Initialize PostgreSQL connection pool
-    # TODO: Initialize Redis cache
-    # TODO: Initialize MongoDB connection
+async def lifespan(app: FastAPI) -> AsyncGenerator:
+    """Manage application lifecycle - startup and shutdown events."""
+    # Startup
+    logger.info("Starting Skincare AI API...")
+    
+    try:
+        # Initialize databases
+        await init_db()
+        logger.info("Database connections established")
+        
+        # Initialize Redis cache
+        await init_redis()
+        logger.info("Redis cache initialized")
+        
+        # Initialize monitoring
+        await init_monitoring()
+        logger.info("Monitoring systems initialized")
+        
+        logger.info("Skincare AI API started successfully")
+        
+    except Exception as e:
+        logger.error(f"Failed to start application: {str(e)}")
+        sys.exit(1)
+    
     yield
-    # Shutdown: Cleanup resources
-    print("Shutting down Skincare AI Backend...")
-    # TODO: Close database connections
-    # TODO: Unload ML models
+    
+    # Shutdown
+    logger.info("Shutting down Skincare AI API...")
+    
+    try:
+        await close_redis()
+        await close_db()
+        logger.info("All connections closed successfully")
+        
+    except Exception as e:
+        logger.error(f"Error during shutdown: {str(e)}")
 
 
-# ===========================================
-# FastAPI Application
-# ===========================================
-
+# Create FastAPI application
 app = FastAPI(
-    title="Skincare AI API",
-    description="AI-powered skin analysis and personalized skincare recommendations",
-    version="1.0.0",
-    docs_url="/docs",
-    redoc_url="/redoc",
+    title=settings.PROJECT_NAME,
+    version=settings.VERSION,
+    description=settings.DESCRIPTION,
+    openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    docs_url=f"{settings.API_V1_STR}/docs",
+    redoc_url=f"{settings.API_V1_STR}/redoc",
     lifespan=lifespan,
 )
+
+
+# Middleware Configuration
+# =======================
 
 # CORS Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure for production
+    allow_origins=settings.ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["X-Request-ID", "X-Rate-Limit"],
+)
+
+# GZip compression for responses > 1KB
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+
+
+# Custom Exception Handlers
+# ==========================
+
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(
+    request: Request, 
+    exc: StarletteHTTPException
+) -> JSONResponse:
+    """Handle HTTP exceptions with detailed error responses."""
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "error": {
+                "code": exc.status_code,
+                "message": exc.detail,
+                "path": str(request.url),
+                "method": request.method,
+            }
+        },
+    )
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(
+    request: Request,
+    exc: RequestValidationError
+) -> JSONResponse:
+    """Handle request validation errors."""
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content={
+            "error": {
+                "code": 422,
+                "message": "Validation error",
+                "details": exc.errors(),
+                "path": str(request.url),
+            }
+        },
+    )
+
+
+@app.exception_handler(Exception)
+async def general_exception_handler(
+    request: Request,
+    exc: Exception
+) -> JSONResponse:
+    """Handle unexpected errors."""
+    logger.error(
+        f"Unhandled exception: {str(exc)}",
+        exc_info=True,
+        extra={"path": str(request.url), "method": request.method}
+    )
+    
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={
+            "error": {
+                "code": 500,
+                "message": "Internal server error",
+                "detail": str(exc) if settings.DEBUG else "An error occurred",
+            }
+        },
+    )
+
+
+# Health Check Endpoints
+# =======================
+
+@app.get("/health", tags=["Health"])
+async def health_check():
+    """Basic health check endpoint."""
+    return {
+        "status": "healthy",
+        "version": settings.VERSION,
+        "service": "skincare-ai-api"
+    }
+
+
+@app.get("/health/detailed", tags=["Health"])
+async def detailed_health_check():
+    """Detailed health check including database and cache status."""
+    from app.core.database import check_db_health
+    from app.core.cache import check_redis_health
+    
+    db_status = await check_db_health()
+    redis_status = await check_redis_health()
+    
+    return {
+        "status": "healthy" if db_status and redis_status else "degraded",
+        "version": settings.VERSION,
+        "checks": {
+            "database": "ok" if db_status else "error",
+            "cache": "ok" if redis_status else "error",
+        }
+    }
+
+
+# API Routes
+# ===========
+
+# Include all microservice routers
+app.include_router(
+    auth.router,
+    prefix=f"{settings.API_V1_STR}/auth",
+    tags=["Authentication"]
+)
+
+app.include_router(
+    users.router,
+    prefix=f"{settings.API_V1_STR}/users",
+    tags=["Users"]
+)
+
+app.include_router(
+    analysis.router,
+    prefix=f"{settings.API_V1_STR}/analysis",
+    tags=["Skin Analysis"]
+)
+
+app.include_router(
+    routine.router,
+    prefix=f"{settings.API_V1_STR}/routine",
+    tags=["Skincare Routine"]
+)
+
+app.include_router(
+    progress.router,
+    prefix=f"{settings.API_V1_STR}/progress",
+    tags=["Progress Tracking"]
+)
+
+app.include_router(
+    ingredients.router,
+    prefix=f"{settings.API_V1_STR}/ingredients",
+    tags=["Ingredients"]
+)
+
+app.include_router(
+    notifications.router,
+    prefix=f"{settings.API_V1_STR}/notifications",
+    tags=["Notifications"]
+)
+
+app.include_router(
+    dermatologist.router,
+    prefix=f"{settings.API_V1_STR}/dermatologist",
+    tags=["Dermatologist Services"]
 )
 
 
-# ===========================================
-# Health & Status Endpoints
-# ===========================================
+# Root endpoint
+@app.get("/", tags=["Root"])
+async def root():
+    """API root endpoint with service information."""
+    return {
+        "service": settings.PROJECT_NAME,
+        "version": settings.VERSION,
+        "docs": f"{settings.API_V1_STR}/docs",
+        "health": "/health",
+        "status": "running"
+    }
 
-@app.get("/", response_model=HealthResponse)
-async def root() -> HealthResponse:
-    """Root endpoint - API health check."""
-    return HealthResponse(
-        status="healthy",
-        version="1.0.0",
-        services={
-            "api": "running",
-            "ml_engine": "ready",
-        }
-    )
-
-
-@app.get("/health", response_model=HealthResponse)
-async def health_check() -> HealthResponse:
-    """Detailed health check endpoint."""
-    # TODO: Check actual service health
-    return HealthResponse(
-        status="healthy",
-        version="1.0.0",
-        services={
-            "api": "running",
-            "database": "connected",
-            "redis": "connected",
-            "ml_engine": "ready",
-        }
-    )
-
-
-# ===========================================
-# Skin Analysis Endpoints (Feature 1)
-# ===========================================
-
-@app.post("/api/v1/analyze", response_model=SkinAnalysisResponse)
-async def analyze_skin(
-    file: UploadFile = File(..., description="Skin image to analyze"),
-    user_id: str = "anonymous",
-    include_recommendations: bool = True,
-) -> SkinAnalysisResponse:
-    """
-    AI Skin Analysis Engine (Feature 1 from FEATURES_ROADMAP.md)
-    
-    Process flow:
-    1. Validate uploaded image
-    2. Run face detection (ONNX model)
-    3. Perform skin segmentation (DeepLabV3+)
-    4. Analyze skin concerns (ResNet50)
-    5. Generate recommendations
-    
-    Returns detailed skin analysis with concerns and recommendations.
-    """
-    # Validate file type
-    if not file.content_type.startswith("image/"):
-        raise HTTPException(
-            status_code=400,
-            detail="Invalid file type. Please upload an image."
-        )
-    
-    # Read image data
-    image_data = await file.read()
-    
-    # TODO: Implement actual ML pipeline
-    # - Load ONNX model
-    # - Preprocess image
-    # - Run inference
-    # - Post-process results
-    
-    # Placeholder response
-    from datetime import datetime
-    import uuid
-    
-    return SkinAnalysisResponse(
-        analysis_id=str(uuid.uuid4()),
-        skin_type="combination",
-        concerns=[
-            SkinConcernResult(
-                concern="mild_acne",
-                confidence=0.85,
-                severity="low"
-            ),
-            SkinConcernResult(
-                concern="uneven_texture",
-                confidence=0.72,
-                severity="medium"
-            ),
-        ],
-        recommendations=[
-            "Use a gentle, non-comedogenic cleanser",
-            "Apply niacinamide serum for texture improvement",
-            "Use SPF 30+ sunscreen daily",
-        ] if include_recommendations else [],
-        processed_at=datetime.utcnow().isoformat(),
-    )
-
-
-# ===========================================
-# Main Entry Point
-# ===========================================
 
 if __name__ == "__main__":
+    # Run with uvicorn for development
     uvicorn.run(
-        "app.main:app",
+        "main:app",
         host="0.0.0.0",
         port=8000,
-        reload=True,  # Disable in production
+        reload=settings.DEBUG,
+        log_level="info",
+        access_log=True,
     )
