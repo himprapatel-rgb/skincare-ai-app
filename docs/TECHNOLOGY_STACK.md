@@ -1070,3 +1070,128 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 **Document Status:** ✅ Complete
 **Next Action:** Begin Phase 1 development
 **Est. Time to MVP:** 4 months
+
+---
+
+## System Architecture Diagram
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        SKINCARE AI APP                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │                    MOBILE APP (Flutter)                  │   │
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐    │   │
+│  │  │ Camera  │  │Analysis │  │Routines │  │Progress │    │   │
+│  │  │ Module  │  │ Screen  │  │ Builder │  │ Tracker │    │   │
+│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘    │   │
+│  │       └────────────┴────────────┴────────────┘         │   │
+│  │                         │                               │   │
+│  │              ┌──────────┴──────────┐                   │   │
+│  │              │   State Management  │                   │   │
+│  │              │   (Provider/Bloc)   │                   │   │
+│  │              └──────────┬──────────┘                   │   │
+│  └──────────────────────────┼──────────────────────────────┘   │
+│                             │                                   │
+│  ┌──────────────────────────┴──────────────────────────────┐   │
+│  │                   ON-DEVICE ML (TFLite)                  │   │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │   │
+│  │  │ Skin Type    │  │ Concern      │  │ Health       │   │   │
+│  │  │ Classifier   │  │ Detector     │  │ Scorer       │   │   │
+│  │  └──────────────┘  └──────────────┘  └──────────────┘   │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                             │                                   │
+│                       HTTPS/REST                                │
+│                             │                                   │
+│  ┌──────────────────────────┴──────────────────────────────┐   │
+│  │                    BACKEND (FastAPI)                     │   │
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐    │   │
+│  │  │  Auth   │  │  User   │  │ Product │  │Analytics│    │   │
+│  │  │ Service │  │ Service │  │ Service │  │ Service │    │   │
+│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘    │   │
+│  └───────┼────────────┼────────────┼────────────┼──────────┘   │
+│          │            │            │            │               │
+│  ┌───────┴────────────┴────────────┴────────────┴──────────┐   │
+│  │                      DATA LAYER                          │   │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐               │   │
+│  │  │PostgreSQL│  │ MongoDB  │  │  Redis   │               │   │
+│  │  │ (Users)  │  │(Products)│  │ (Cache)  │               │   │
+│  │  └──────────┘  └──────────┘  └──────────┘               │   │
+│  └─────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## API Endpoints Overview
+
+### Authentication APIs
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| /api/v1/auth/register | POST | User registration |
+| /api/v1/auth/login | POST | User login |
+| /api/v1/auth/refresh | POST | Refresh token |
+| /api/v1/auth/logout | POST | User logout |
+
+### Skin Analysis APIs
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| /api/v1/analysis/scan | POST | Submit skin photo |
+| /api/v1/analysis/{id} | GET | Get analysis results |
+| /api/v1/analysis/history | GET | User analysis history |
+
+### Routine APIs
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| /api/v1/routines/generate | POST | Generate routine |
+| /api/v1/routines/{id} | GET | Get routine details |
+| /api/v1/routines/{id}/complete | POST | Mark step complete |
+
+---
+
+## Environment Configuration
+
+### Development
+```env
+ENVIRONMENT=development
+DEBUG=true
+API_URL=http://localhost:8000
+DB_HOST=localhost
+REDIS_HOST=localhost
+```
+
+### Production
+```env
+ENVIRONMENT=production
+DEBUG=false
+API_URL=https://api.skincare-ai.app
+DB_HOST=db.internal
+REDIS_HOST=cache.internal
+```
+
+---
+
+## Security Requirements
+
+- All API calls over HTTPS
+- JWT tokens with 15min expiry
+- Refresh tokens with 7-day expiry
+- Password hashing with bcrypt
+- Rate limiting: 100 req/min per user
+- CORS configured for app domains only
+- Data encryption at rest (AES-256)
+- GDPR/CCPA compliance built-in
+
+---
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0 | Nov 25, 2025 | Initial technology stack |
+| 2.0 | Nov 25, 2025 | Added architecture diagram, API overview, security |
+
+---
+
+*Document maintained by Skincare AI Development Team*
