@@ -314,3 +314,64 @@ def download_dataset(name: str, output_dir: Path):
 ---
 
 **Status:** ✅ Catalog Complete | 📊 15+ Datasets Documented | 🎯 Priority Rankings Provided
+
+---
+
+## Dataset Usage Guidelines
+
+### Recommended Datasets by Use Case
+
+| Use Case | Primary Dataset | Backup Dataset | Min Size |
+|----------|----------------|----------------|----------|
+| Skin Type Classification | Fitzpatrick17k | DDI | 10,000 |
+| Acne Detection | ACNE04 | Custom | 5,000 |
+| Wrinkle Detection | APPA-REAL | Custom | 8,000 |
+| Pigmentation | ISIC Archive | HAM10000 | 15,000 |
+| Dark Circles | Custom Required | - | 3,000 |
+
+### Data Preprocessing Pipeline
+
+```yaml
+pipeline:
+  1_download:
+    - verify_checksums
+    - extract_archives
+  2_clean:
+    - remove_duplicates
+    - filter_quality
+    - verify_labels
+  3_augment:
+    - rotation: [-15, 15]
+    - flip: horizontal
+    - brightness: [0.8, 1.2]
+    - contrast: [0.9, 1.1]
+  4_split:
+    - train: 70%
+    - validation: 15%
+    - test: 15%
+  5_export:
+    - format: TFRecord
+    - compression: gzip
+```
+
+### Licensing Compliance
+
+| License Type | Commercial Use | Attribution | Share-Alike |
+|--------------|----------------|-------------|-------------|
+| CC BY 4.0 | Yes | Required | No |
+| CC BY-NC | No | Required | No |
+| MIT | Yes | Required | No |
+| Custom/Research | Contact | Varies | Varies |
+
+---
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0 | Nov 25, 2025 | Initial catalog |
+| 2.0 | Nov 25, 2025 | Added usage guidelines, preprocessing pipeline, licensing |
+
+---
+
+*Research by Data & Analytics Team*
