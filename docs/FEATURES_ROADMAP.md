@@ -401,3 +401,55 @@ This document lists ONLY features we will develop based on our comprehensive res
 **Status:** ✅ Feature specification complete based on research  
 **Next Step:** System Architecture Design  
 **Research Foundation:** 11 documents + competitive analysis of 20 apps
+
+---
+
+## Feature Priority Matrix
+
+### Priority Classification System
+
+| Priority | Label | Description | Timeline |
+|----------|-------|-------------|----------|
+| P0 | Critical | Core functionality, MVP blocker | Month 1-2 |
+| P1 | High | Essential features for launch | Month 3-4 |
+| P2 | Medium | Important but not blocking | Month 5-8 |
+| P3 | Low | Nice-to-have, future releases | Month 9-12 |
+
+### Feature Priority Assignment
+
+| Feature | Priority | Effort (SP) | Dependencies |
+|---------|----------|-------------|---------------|
+| AI Skin Analysis | P0 | 21 | Camera API, ML Models |
+| User Authentication | P0 | 13 | Backend API |
+| Progress Tracking | P1 | 13 | Database, Charts |
+| Personalized Routines | P1 | 21 | AI Analysis, Product DB |
+| Ingredient Scanner | P1 | 13 | OCR, Ingredient DB |
+| Product Recommendations | P2 | 21 | Product DB, AI Engine |
+| Community Features | P2 | 34 | User System, Moderation |
+| Dermatologist Connect | P3 | 34 | Video API, Scheduling |
+| AR Try-On | P3 | 55 | AR Kit, Product Images |
+
+---
+
+## Success Metrics & KPIs
+
+### Business Metrics
+
+| Metric | Target (Year 1) | Measurement |
+|--------|-----------------|-------------|
+| Monthly Active Users | 100,000 | Analytics |
+| Daily Active Users | 25,000 | Analytics |
+| User Retention (Day 7) | >40% | Cohort |
+| User Retention (Day 30) | >20% | Cohort |
+| App Store Rating | >4.5 stars | Stores |
+| Conversion (Free to Premium) | >5% | Analytics |
+
+### Technical Metrics
+
+| Metric | Target | Alert |
+|--------|--------|-------|
+| API Response Time (p95) | <500ms | >1000ms |
+| ML Inference Time | <200ms | >500ms |
+| App Crash Rate | <0.5% | >1% |
+| App Load Time | <2s | >4s |
+| Uptime | 99.9% | <99.5% |
