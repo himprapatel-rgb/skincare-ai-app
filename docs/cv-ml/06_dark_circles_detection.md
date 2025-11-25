@@ -243,3 +243,57 @@ thresholds = {
 ---
 
 **Status:** ✅ Research Complete | 👁️ Type Classification Ready | 📊 Severity Scoring Defined
+
+---
+
+## Implementation Specifications
+
+### Dark Circles Detection Algorithm
+
+```yaml
+algorithm: dark_circles_detector
+architecture: EfficientNet-B0 + FPN
+input:
+  format: RGB
+  size: 224x224
+  roi: periorbital_region
+  preprocessing:
+    - face_detection
+    - eye_landmark_extraction
+    - region_crop
+output:
+  type: classification + severity
+  classes:
+    - vascular (blue/purple)
+    - pigmented (brown)
+    - structural (shadow)
+    - mixed
+  severity: [0-100]
+performance:
+  accuracy: >90%
+  inference_time: <80ms
+  model_size: <8MB
+```
+
+### Severity Scoring System
+
+| Score | Level | Description |
+|-------|-------|-------------|
+| 0-20 | Minimal | Barely visible |
+| 21-40 | Mild | Slight discoloration |
+| 41-60 | Moderate | Noticeable circles |
+| 61-80 | Severe | Prominent dark circles |
+| 81-100 | Very Severe | Deep discoloration |
+
+---
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0 | Nov 25, 2025 | Initial research |
+| 2.0 | Nov 25, 2025 | Added implementation specs |
+
+---
+
+*Research by ML & Dermatology Team*

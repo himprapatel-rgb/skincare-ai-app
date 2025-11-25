@@ -276,3 +276,62 @@ def calculate_sensitivity_score(face_features):
 ---
 
 **Status:** ✅ Research Complete | 🧪 Classification System Defined | 📱 Ready for Implementation
+
+---
+
+## Implementation Specifications
+
+### Skin Type Classifier Algorithm
+
+```yaml
+algorithm: skin_type_classifier
+architecture: MobileNetV3-Small
+input:
+  format: RGB
+  size: 224x224
+  preprocessing:
+    - face_detection
+    - skin_region_extraction
+    - lighting_normalization
+output:
+  type: multi-class
+  classes:
+    - normal
+    - dry
+    - oily
+    - combination
+    - sensitive
+  confidence_scores: true
+  secondary_output:
+    - fitzpatrick_type: [I-VI]
+    - undertone: [warm, cool, neutral]
+performance:
+  accuracy: >92%
+  top2_accuracy: >98%
+  inference_time: <50ms
+  model_size: <5MB
+```
+
+### Fitzpatrick Scale Classification
+
+| Type | Description | Sun Reaction |
+|------|-------------|-------------|
+| I | Very fair | Always burns |
+| II | Fair | Burns easily |
+| III | Medium | Sometimes burns |
+| IV | Olive | Rarely burns |
+| V | Brown | Very rarely burns |
+| VI | Dark brown | Never burns |
+
+---
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0 | Nov 25, 2025 | Initial research |
+| 2.0 | Nov 25, 2025 | Added implementation specs |
+
+---
+
+*Research by CV & Dermatology Team*

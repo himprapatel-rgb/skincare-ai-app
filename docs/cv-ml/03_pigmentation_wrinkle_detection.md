@@ -306,3 +306,80 @@ Pigmentation detection is highly susceptible to skin tone bias. Models trained p
 ---
 
 **Status:** ✅ Research Complete | 🛠️ Implementation Ready | 📱 Mobile Optimization Planned
+
+---
+
+## Implementation Specifications
+
+### Pigmentation Detection Algorithm
+
+```yaml
+algorithm: pigmentation_detector
+architecture: YOLOv8-nano
+input:
+  format: RGB
+  size: 640x640
+  preprocessing:
+    - normalize: [0, 1]
+    - augmentation: [rotation, flip, brightness]
+output:
+  type: bounding_boxes
+  classes:
+    - dark_spot
+    - melasma
+    - hyperpigmentation
+    - sun_damage
+  confidence_threshold: 0.5
+  nms_threshold: 0.4
+performance:
+  mAP_target: 0.75
+  inference_time: <100ms
+  model_size: <10MB
+```
+
+### Wrinkle Detection Algorithm
+
+```yaml
+algorithm: wrinkle_detector
+architecture: U-Net + ResNet34
+input:
+  format: Grayscale
+  size: 512x512
+  preprocessing:
+    - edge_enhancement
+    - histogram_equalization
+output:
+  type: segmentation_mask
+  classes:
+    - fine_lines
+    - deep_wrinkles
+    - crows_feet
+    - forehead_lines
+  severity_scores: [0-100]
+performance:
+  dice_coefficient: >0.80
+  inference_time: <150ms
+  model_size: <15MB
+```
+
+### Training Data Requirements
+
+| Condition | Min Images | Annotations | Diversity |
+|-----------|------------|-------------|----------|
+| Dark Spots | 5,000 | Bounding box | Skin tones I-VI |
+| Melasma | 3,000 | Segmentation | Age 20-60 |
+| Wrinkles | 10,000 | Landmarks | All ages |
+| Sun Damage | 4,000 | Classification | Indoor/outdoor |
+
+---
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0 | Nov 25, 2025 | Initial research |
+| 2.0 | Nov 25, 2025 | Added implementation specs |
+
+---
+
+*Research by ML & Computer Vision Team*
