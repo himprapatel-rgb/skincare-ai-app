@@ -682,3 +682,173 @@ Remaining sections to be completed:
 3. Detail all component specifications
 4. Add interaction patterns
 5. Define accessibility requirements
+
+---
+
+## Additional User Personas
+
+### Persona 4: The Busy Professional
+**Name:** Michael Chen  
+**Age:** 35  
+**Occupation:** Marketing Executive  
+**Skin Type:** Combination  
+**Tech Savviness:** High  
+
+**Goals:**
+- Quick morning routine (<5 min)
+- Look presentable for video calls
+- Minimal products, maximum results
+
+**Pain Points:**
+- No time for elaborate routines
+- Travels frequently
+- Stress affects skin
+
+**App Usage:**
+- Quick scan feature during commute
+- Simple routines only
+- Reminder notifications critical
+
+### Persona 5: The Skin Condition Sufferer
+**Name:** Priya Sharma  
+**Age:** 28  
+**Occupation:** Software Developer  
+**Skin Type:** Sensitive with rosacea  
+**Tech Savviness:** Very High  
+
+**Goals:**
+- Manage chronic condition
+- Find trigger-free products
+- Track flare-ups
+
+**Pain Points:**
+- Many products cause reactions
+- Needs ingredient checking
+- Wants progress documentation for dermatologist
+
+**App Usage:**
+- Ingredient scanner essential
+- Progress photos for doctor
+- Condition-specific recommendations
+
+---
+
+## User Journey Maps
+
+### Journey: First-Time User Onboarding
+
+```
+Stage       | Awareness    | Download    | Onboarding   | First Scan   | Results
+------------|--------------|-------------|--------------|--------------|----------
+Action      | See ad/review| Install app | Complete quiz| Take photo   | View analysis
+Thought     | "Looks useful"| "Free trial" | "Quick setup"| "Easy camera"| "Helpful info"
+Emotion     | Curious      | Hopeful     | Engaged      | Excited      | Satisfied
+Touchpoint  | App Store    | Install     | Quiz screens | Camera       | Results
+Opportunity | Clear value  | Fast install| Skip option  | Face guide   | Save/share
+```
+
+### Journey: Building a Routine
+
+```
+Stage       | Analysis     | Recommendation | Selection  | Reminder     | Completion
+------------|--------------|----------------|------------|--------------|----------
+Action      | Get results  | View routine   | Pick products| Set times   | Do routine
+Thought     | "My concerns"| "Makes sense"  | "Within budget"| "Won't forget"| "Feeling good"
+Emotion     | Informed     | Confident      | Empowered  | Organized    | Accomplished
+```
+
+---
+
+## Interaction Design Patterns
+
+### Gesture Support
+| Gesture | Action | Screen |
+|---------|--------|--------|
+| Swipe Left | Next step | Routine Builder |
+| Swipe Right | Previous step | Routine Builder |
+| Pinch | Zoom photo | Analysis Results |
+| Double Tap | Quick action | Product cards |
+| Long Press | More options | Any list item |
+| Pull Down | Refresh | All lists |
+
+### Animation Guidelines
+| Element | Animation | Duration | Easing |
+|---------|-----------|----------|--------|
+| Screen transitions | Fade + Slide | 300ms | ease-out |
+| Loading states | Pulse | 1000ms | ease-in-out |
+| Success feedback | Scale bounce | 200ms | spring |
+| Error shake | Horizontal shake | 300ms | ease-out |
+| Progress bars | Linear fill | Variable | linear |
+
+---
+
+## Accessibility Compliance
+
+### WCAG 2.1 AA Checklist
+
+#### Perceivable
+- [ ] Text alternatives for images
+- [ ] Captions for video content
+- [ ] Color contrast 4.5:1 minimum
+- [ ] Text resizable to 200%
+- [ ] No information by color alone
+
+#### Operable
+- [ ] Keyboard navigable
+- [ ] No time limits without extension
+- [ ] Skip navigation links
+- [ ] Focus visible indicators
+- [ ] Touch targets 44x44dp
+
+#### Understandable
+- [ ] Consistent navigation
+- [ ] Error identification
+- [ ] Labels for inputs
+- [ ] Predictable behavior
+
+#### Robust
+- [ ] Valid markup
+- [ ] Name, role, value for components
+- [ ] Status messages for screen readers
+
+---
+
+## Design Tokens
+
+### Spacing Scale
+```
+space-xs: 4dp
+space-sm: 8dp
+space-md: 16dp
+space-lg: 24dp
+space-xl: 32dp
+space-2xl: 48dp
+```
+
+### Border Radius
+```
+radius-sm: 4dp
+radius-md: 8dp
+radius-lg: 16dp
+radius-full: 9999dp
+```
+
+### Elevation/Shadow
+```
+elevation-1: 0 1dp 3dp rgba(0,0,0,0.12)
+elevation-2: 0 2dp 6dp rgba(0,0,0,0.15)
+elevation-3: 0 4dp 12dp rgba(0,0,0,0.18)
+```
+
+---
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0 | Nov 25, 2025 | Initial UI/UX design |
+| 2.0 | Nov 25, 2025 | Added personas, journey maps, interaction patterns, accessibility, design tokens |
+
+---
+
+*Document maintained by Skincare AI Design Team*
