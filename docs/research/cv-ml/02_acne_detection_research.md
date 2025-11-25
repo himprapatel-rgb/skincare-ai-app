@@ -338,3 +338,120 @@ class AcneDetector {
 ---
 
 **Status**: ✅ Research Complete | 🛠️ Ready for Training | 📊 Clinical Validation Pending
+
+---
+
+## 9. Model Architecture Specifications
+
+### 9.1 Detection Model Configuration
+
+```yaml
+# acne_detection_config.yaml
+acne_detection:
+  version: "2.0"
+  
+  model:
+    architecture: "YOLOv8n"
+    input_size: [640, 640]
+    num_classes: 5  # comedones, papules, pustules, nodules, cysts
+    
+  backbone:
+    type: "CSPDarknet"
+    depth_multiple: 0.33
+    width_multiple: 0.25
+    
+  severity_classifier:
+    type: "EfficientNet-B0"
+    num_severity_levels: 4  # mild, moderate, severe, very_severe
+    
+  mobile_optimization:
+    quantization: "int8"
+    pruning_rate: 0.3
+    target_latency_ms: 100
+```
+
+### 9.2 Detection Classes
+
+| Class ID | Type | Description | IGA Mapping |
+|----------|------|-------------|-------------|
+| 0 | Comedones | Blackheads, whiteheads | Grade 1 |
+| 1 | Papules | Small red bumps | Grade 2 |
+| 2 | Pustules | Pus-filled lesions | Grade 2-3 |
+| 3 | Nodules | Deep, painful lumps | Grade 3-4 |
+| 4 | Cysts | Large, pus-filled | Grade 4 |
+
+---
+
+## 10. Training Pipeline
+
+### 10.1 Dataset Requirements
+
+| Dataset | Images | Annotations | Usage |
+|---------|--------|-------------|-------|
+| ACNE04 | 1,457 | Bounding boxes | Training |
+| Internal Clinical | 5,000+ | Expert-labeled | Training + Validation |
+| Fitzpatrick-17k | Augmentation | Skin tone diversity | Training |
+
+### 10.2 Training Configuration
+
+```python
+training_config = {
+    "epochs": 300,
+    "batch_size": 16,
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0005,
+    "augmentations": [
+        "horizontal_flip",
+        "random_rotation_15",
+        "color_jitter",
+        "random_crop"
+    ],
+    "early_stopping_patience": 20
+}
+```
+
+---
+
+## 11. API Integration
+
+### 11.1 Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/v1/acne/detect` | POST | Detect acne lesions in image |
+| `/api/v1/acne/severity` | POST | Classify overall severity |
+| `/api/v1/acne/track` | POST | Compare with previous analysis |
+| `/api/v1/acne/treatment` | GET | Get treatment recommendations |
+
+### 11.2 Response Schema
+
+```json
+{
+  "detections": [
+    {
+      "class": "pustule",
+      "confidence": 0.92,
+      "bbox": [120, 85, 45, 40],
+      "severity_contribution": 0.15
+    }
+  ],
+  "overall_severity": "moderate",
+  "iga_score": 2,
+  "lesion_count": 12,
+  "recommendations": ["benzoyl_peroxide", "salicylic_acid"]
+}
+```
+
+---
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|--------|
+| 1.0 | Nov 25, 2025 | Initial research document |
+| 2.0 | Nov 25, 2025 | Added model specs, training pipeline, API integration |
+
+---
+
+*Research by Computer Vision & Dermatology AI Swarm*
