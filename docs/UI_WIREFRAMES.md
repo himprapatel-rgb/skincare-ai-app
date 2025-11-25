@@ -1,7 +1,7 @@
 # Skincare AI App - UI Wireframes & Design Specifications
 
 **Document:** `/docs/UI_WIREFRAMES.md`  
-**Version:** 1.0  
+**Version:** 2.0 (Industry-Standard Update)  
 **Last Updated:** November 25, 2025  
 **Based on:** UI/UX Research + TECHNOLOGY_STACK.md
 
@@ -19,7 +19,10 @@
 8. [Ingredient Scanner](#8-ingredient-scanner)
 9. [User Profile](#9-user-profile)
 10. [Settings & Preferences](#10-settings-preferences)
-
+11. [Notifications & Alerts](#11-notifications-alerts)
+12. [Performance Guidelines](#12-performance-guidelines)
+13. [Additional Industry-Standard Screens](#13-additional-industry-standard-screens)
+14. [Conclusion](#14-conclusion)
 ---
 
 ## 1. Design System
