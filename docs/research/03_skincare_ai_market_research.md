@@ -266,3 +266,91 @@ By focusing on these gaps, our app can establish a defensible market position ag
 ---
 
 *Document prepared by Market Research Team - November 2025*
+
+---
+
+## 14. Market Sizing & TAM/SAM/SOM Analysis
+
+### 14.1 Total Addressable Market (TAM)
+
+| Segment | 2024 | 2028 | CAGR |
+|---------|------|------|------|
+| Global Skincare Apps | $2.8B | $5.2B | 16.8% |
+| AI-Powered Beauty Tech | $1.9B | $4.1B | 21.2% |
+| Mobile Health (mHealth) | $58B | $130B | 22.4% |
+
+### 14.2 Serviceable Addressable Market (SAM)
+
+| Target Demographic | Market Size | Penetration Goal |
+|-------------------|-------------|------------------|
+| Women 18-45, smartphone users | $890M | 15% by Year 3 |
+| Men interested in skincare | $320M | 8% by Year 3 |
+| Dermatology patients seeking digital tools | $450M | 12% by Year 3 |
+
+### 14.3 Serviceable Obtainable Market (SOM)
+
+**Year 1 Target**: $2.5M ARR (10,000 premium subscribers)
+**Year 3 Target**: $25M ARR (85,000 premium subscribers)
+**Year 5 Target**: $100M ARR (300,000+ premium subscribers)
+
+---
+
+## 15. SWOT Analysis
+
+### Strengths
+- Advanced AI/ML skin analysis capabilities
+- Privacy-first architecture (on-device processing)
+- Integration with dermatology professionals
+- Cross-platform Flutter implementation
+
+### Weaknesses
+- New entrant in competitive market
+- Limited brand recognition initially
+- Dependency on camera quality for analysis
+- Higher development costs for AI features
+
+### Opportunities
+- Growing awareness of personalized skincare
+- Telehealth adoption post-pandemic
+- Partnership potential with skincare brands
+- International expansion (Asia-Pacific market)
+
+### Threats
+- Established competitors (Perfect Corp, Skinive)
+- Regulatory changes in health apps
+- User privacy concerns with facial data
+- Economic downturn affecting subscription spending
+
+---
+
+## 16. Go-to-Market Strategy
+
+### 16.1 Launch Phases
+
+| Phase | Timeline | Focus | Key Metrics |
+|-------|----------|-------|-------------|
+| Alpha | Q1 2025 | Internal testing | Bug count < 50 |
+| Beta | Q2 2025 | 5,000 beta users | NPS > 40 |
+| Soft Launch | Q3 2025 | US market only | 25K downloads |
+| Full Launch | Q4 2025 | Global release | 100K downloads |
+
+### 16.2 Marketing Channels
+
+1. **Influencer Partnerships**: Skincare influencers, dermatologists
+2. **Content Marketing**: Skincare education blog, YouTube tutorials
+3. **App Store Optimization**: Keywords, screenshots, reviews
+4. **Paid Acquisition**: Instagram, TikTok targeted ads
+5. **PR/Media**: Tech and beauty publication coverage
+
+---
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|--------|
+| 1.0 | Nov 25, 2025 | Initial market research |
+| 2.0 | Nov 25, 2025 | Added TAM/SAM/SOM, SWOT analysis, GTM strategy |
+
+---
+
+*Document prepared by Market Research Team - November 2025*
