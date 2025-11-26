@@ -1,0 +1,227 @@
+# Firebase Analytics & Monitoring Setup
+
+**Version:** 1.0  
+**Purpose:** Real-time app monitoring & user analytics  
+**Platforms:** iOS & Android  
+**Status:** Production-Ready
+
+---
+
+## 1. FIREBASE PROJECT SETUP
+
+### Create Firebase Project
+```bash
+flutter pub global activate flutterfire_cli
+
+flutterfire configure \
+  --project=skincare-ai-prod \
+  --ios-bundle-id=com.skincareai.app \
+  --android-app-id=com.skincareai.app
+```
+
+### Initialize Services
+- ✅ Firebase Core
+- ✅ Firebase Analytics
+- ✅ Firebase Crashlytics
+- ✅ Firebase Performance Monitoring
+- ✅ Firebase Remote Config
+- ✅ Cloud Messaging (FCM)
+
+---
+
+## 2. ANALYTICS EVENTS
+
+### Core Events
+
+**app_open**
+```dart
+await FirebaseAnalytics.instance.logAppOpen();
+```
+
+**screen_view**
+```dart
+await FirebaseAnalytics.instance.logScreenView(
+  screenName: 'home_screen',
+  screenClass: 'HomeScreen',
+);
+```
+
+**user_engagement**
+```dart
+await FirebaseAnalytics.instance.logEvent(
+  name: 'tutorial_complete',
+  parameters: {
+    'tutorial_name': 'onboarding',
+    'duration': 120,
+  },
+);
+```
+
+### Skincare-Specific Events
+
+```dart
+// Skin analysis
+logEvent('skin_analysis_start');
+logEvent('skin_analysis_complete', {
+  'skin_type': 'oily',
+  'concerns': 'acne,dryness',
+});
+
+// Routine usage
+logEvent('routine_view', {
+  'routine_id': 'routine_001',
+  'products_count': 5,
+});
+
+// Product interaction
+logEvent('product_view', {
+  'product_id': 'prod_123',
+  'brand': 'CeraVe',
+});
+
+// Social features
+logEvent('post_created', {
+  'content_type': 'routine_share',
+  'likes_count': 0,
+});
+```
+
+---
+
+## 3. CRASHLYTICS SETUP
+
+### Enable Crash Reporting
+```dart
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
+FlutterError.onError = (errorDetails) {
+  FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+};
+
+PlatformDispatcher.instance.onError = (error, stack) {
+  FirebaseCrashlytics.instance.recordError(error, stack);
+  return true;
+};
+```
+
+### Custom Error Logging
+```dart
+try {
+  // Code that might crash
+} catch (e, st) {
+  FirebaseCrashlytics.instance.recordError(
+    e,
+    st,
+    reason: 'api_call_failed',
+    fatal: false,
+  );
+}
+```
+
+---
+
+## 4. PERFORMANCE MONITORING
+
+### Custom Traces
+```dart
+final trace = FirebasePerformance.instance
+  .newTrace('routine_load');
+
+await trace.start();
+trace.putAttribute('routine_items', '10');
+
+// Do work
+await loadRoutineData();
+
+trace.putMetric('load_time_ms', 250);
+await trace.stop();
+```
+
+### HTTP Monitoring (Auto)
+```dart
+// Automatically monitored
+final response = await http.get(apiUrl);
+```
+
+---
+
+## 5. MONITORING DASHBOARD
+
+### Key Metrics
+
+**Stability:**
+- Crash rate
+- ANR rate
+- HTTP errors
+- Network issues
+
+**Performance:**
+- App startup time
+- Screen load time
+- API response time
+- Memory usage
+
+**Engagement:**
+- Daily active users
+- Session duration
+- Feature usage
+- Retention rate
+
+### Alerts
+
+- Crash rate > 1%
+- HTTP 5xx errors > 5%
+- ANR rate > 0.5%
+- Performance regression
+
+---
+
+## 6. USER IDENTIFICATION
+
+```dart
+// Set user properties
+await FirebaseAnalytics.instance.setUserId(uid: userId);
+
+await FirebaseAnalytics.instance.setUserProperty(
+  name: 'skin_type',
+  value: 'oily',
+);
+
+await FirebaseAnalytics.instance.setUserProperty(
+  name: 'experience_level',
+  value: 'beginner',
+);
+```
+
+---
+
+## 7. REMOTE CONFIG
+
+```dart
+final remoteConfig = FirebaseRemoteConfig.instance;
+
+await remoteConfig.setConfigSettings(
+  RemoteConfigSettings(
+    fetchTimeout: Duration(minutes: 1),
+    minimumFetchInterval: Duration(hours: 1),
+  ),
+);
+
+await remoteConfig.fetchAndActivate();
+
+// Feature flags
+bool showNewFeature = remoteConfig.getBool('show_new_routine');
+double minAppVersion = remoteConfig.getDouble('min_app_version');
+```
+
+---
+
+## SUCCESS METRICS
+
+✅ Crash rate < 0.1%
+✅ ANR rate < 0.05%
+✅ HTTP error rate < 1%
+✅ App startup < 2 seconds
+✅ 95%+ session completion
+
+**Analytics & Monitoring Ready**
