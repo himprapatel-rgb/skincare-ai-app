@@ -5,9 +5,6 @@ stages:
   - build
   - deploy
 
-variables:
-  FLUTTER_WEB_BUILD: "true"
-
 # Build Flutter Web
 build_web:
   stage: build
@@ -15,7 +12,7 @@ build_web:
     - cd mobile
     - flutter config --enable-web
     - flutter pub get
-    - flutter build web --release --base-href "/skincare-ai-app/"
+    - flutter build web --release
   artifacts:
     paths:
       - mobile/build/web/
