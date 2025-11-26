@@ -1,5 +1,5 @@
 name: skincare_ai_app
-description: "AI-powered skincare analysis app"
+description: "AI-powered skincare analysis"
 publish_to: 'none'
 
 version: 0.1.0+1
@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   http: ^1.1.0
   cupertino_icons: ^1.0.2
-    image_picker: ^1.0.4
+  image_picker: ^1.0.4
 
 dev_dependencies:
   flutter_test:
