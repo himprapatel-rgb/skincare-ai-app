@@ -3,23 +3,15 @@ stages:
   - test
   - deploy
 
-build_app:
+build:
   stage: build
-  script:
-    - echo 'Building apps'
+  script: echo build
 
-test_app:
+test:
   stage: test
-  script:
-    - echo 'Running tests'
+  script: echo test
 
-deploy_app:
+deploy:
   stage: deploy
-  script:
-    - echo 'Starting deployment'
-    - echo 'iOS: build/ios/app.ipa'
-    - echo 'Android: build/android/app-release.apk'
-    - echo 'Status: PRODUCTION READY'
+  script: echo deploy
   when: manual
-  only:
-    - main
