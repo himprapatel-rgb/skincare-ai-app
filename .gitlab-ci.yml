@@ -1,17 +1,56 @@
+# Skincare AI App - Flutter Web CI/CD Pipeline
+# This pipeline builds and deploys Flutter Web to GitLab Pages
+
+image: cirrusci/flutter:stable
+
 stages:
   - build
   - test
   - deploy
 
-build:
-  stage: build
-  script: echo build
+variables:
+  FLUTTER_WEB_BUILD: "true"
 
+# Cache Flutter dependencies
+cache:
+  paths:
+    - .pub-cache/
+
+before_script:
+  - flutter pub get
+  - flutter config --enable-web
+
+# Build Flutter Web
+build_web:
+  stage: build
+  script:
+    - cd mobile
+    - flutter pub get
+    - flutter build web --release --base-href "/skincare-ai-app/"
+  artifacts:
+    paths:
+      - mobile/build/web/
+    expire_in: 1 week
+
+# Run tests
 test:
   stage: test
-  script: echo test
+  script:
+    - cd mobile
+    - flutter test
+  allow_failure: true
 
-deploy:
+# Deploy to GitLab Pages
+pages:
   stage: deploy
-  script: echo deploy
-  when: manual
+  script:
+    - mkdir -p public
+    - cp -r mobile/build/web/* public/
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+  environment:
+    name: production
+    url: https://himprapatel-group.gitlab.io/skincare-ai-app
