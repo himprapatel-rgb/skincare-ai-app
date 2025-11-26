@@ -6,26 +6,39 @@ stages:
 build_app:
   stage: build
   script:
-    - echo "Building Skincare AI App"
-    - flutter --version
+    - echo "Building iOS and Android apps..."
+    - flutter pub get
+    - flutter build ios --release
+    - flutter build apk --release
+  artifacts:
+    paths:
+      - build/ios/app.ipa
+      - build/android/app-release.apk
+    expire_in: 1 week
   only:
     - main
 
 test_app:
   stage: test
   script:
-    - echo "Running Tests"
-    - flutter test
+    - echo "Running tests..."
+    - flutter test --coverage
   only:
     - main
 
 deploy_app:
   stage: deploy
   script:
-    - echo "DEPLOYMENT APPROVED"
+    - echo "==================================="
+    - echo "✅ DEPLOYMENT APPROVAL REQUIRED"
+    - echo "Project: $CI_PROJECT_NAME"
+    - echo "Branch: $CI_COMMIT_REF_NAME"
+    - echo ""
+    - echo "📦 Build artifacts ready:"
+    - echo "  • iOS: build/ios/app.ipa"
+    - echo "  • Android: build/android/app-release.apk"
     - echo "Status: PRODUCTION READY"
-    - echo "iOS: app-release.ipa (22 MB)"
-    - echo "Android: app-release.aab (18 MB)"
+    - echo "==================================="
   when: manual
   only:
     - main
