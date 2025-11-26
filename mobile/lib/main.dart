@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const SkincareAIApp());
+  runApp(const MyApp());
 }
 
-class SkincareAIApp extends StatelessWidget {
-  const SkincareAIApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,17 +13,7 @@ class SkincareAIApp extends StatelessWidget {
       title: 'Skincare AI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6B4EE6),
-          brightness: Brightness.light,
-        ),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6B4EE6),
-          brightness: Brightness.dark,
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
         useMaterial3: true,
       ),
       home: const HomePage(),
@@ -39,32 +29,28 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Skincare AI'),
-        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.face_retouching_natural,
-              size: 100,
+              Icons.face,
+              size: 80,
               color: Theme.of(context).colorScheme.primary,
             ),
-            const SizedBox(height: 24),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Welcome to Skincare AI',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: TextStyle(fontSize: 24),
             ),
-            const SizedBox(height: 16),
-            Text(
-              'Your personal AI-powered skincare assistant',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 32),
-            ElevatedButton.icon(
+            const SizedBox(height: 10),
+            const Text('Your AI-powered skincare assistant'),
+            const SizedBox(height: 30),
+            ElevatedButton(
               onPressed: () {},
-              icon: const Icon(Icons.camera_alt),
-              label: const Text('Analyze Skin'),
+              child: const Text('Analyze Skin'),
             ),
           ],
         ),
