@@ -46,7 +46,7 @@ class SkincareAI {
       evening.add('Use retinol treatment');
       products.add('Retinol Cream - \$34.99');
     }
-    if (metrics['ppiores']! > 40) {
+    if (metrics['pores']! > 40) {
       morning.add('Use pore-minimizing primer');
       evening.add('Apply BHA exfoliant');
       products.add('Pore Refining Serum - \$29.99');
