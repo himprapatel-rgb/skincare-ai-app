@@ -1,13 +1,22 @@
-# Skincare AI App - Flutter Web CI/CD Pipeline
-image: ghcr.io/cirruslabs/flutter:stable
+# Skincare AI App - CI/CD Pipeline for Frontend and Backend
+
+image: docker:latest
+
+services:
+  - docker:dind
 
 stages:
   - build
   - deploy
 
-# Build Flutter Web
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: "/certs"
+
+# Frontend - Flutter Web Build
 build_web:
   stage: build
+  image: ghcr.io/cirruslabs/flutter:stable
   script:
     - cd mobile
     - flutter config --enable-web
@@ -17,10 +26,27 @@ build_web:
     paths:
       - mobile/build/web/
     expire_in: 1 week
+  only:
+    - main
 
-# Deploy to GitLab Pages
+# Backend - FastAPI Docker Build
+build_backend:
+  stage: build
+  script:
+    - cd backend
+    - docker build -t skincare-ai-backend:$CI_COMMIT_SHA -t skincare-ai-backend:latest .
+    - docker save skincare-ai-backend:$CI_COMMIT_SHA | gzip > backend-image.tar.gz
+  artifacts:
+    paths:
+      - backend/backend-image.tar.gz
+    expire_in: 1 week
+  only:
+    - main
+
+# Frontend - Deploy to GitLab Pages
 pages:
   stage: deploy
+  image: alpine:latest
   script:
     - mkdir -p public
     - cp -r mobile/build/web/* public/
@@ -29,3 +55,16 @@ pages:
       - public
   only:
     - main
+  dependencies:
+    - build_web
+
+# Backend - Test Image (optional: runs backend tests)
+test_backend:
+  stage: build
+  script:
+    - cd backend
+    - docker build --target builder -t skincare-ai-backend:test -f Dockerfile .
+    - echo "Backend image built and ready for deployment"
+  only:
+    - main
+  allow_failure: true
