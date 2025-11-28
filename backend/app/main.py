@@ -29,7 +29,7 @@ from app.core.monitoring import init_monitoring
 
 # Import routers from microservices
 from app.api.v1.routes import auth, analysis, routine, progress, ingredients
-from app.api.v1.routes import users, notifications, dermatologist
+from app.api.v1.routes import users, notifications, dermatologist, skin_scan
 
 # Setup logging
 setup_logging()
@@ -253,7 +253,11 @@ app.include_router(
     tags=["Dermatologist Services"]
 )
 
-
+app.include_router(
+    skin_scan.router,
+    prefix=f"{settings.API_V1_STR}/skin-scan",
+    tags=["Skin Scan"]
+)
 # Root endpoint
 @app.get("/", tags=["Root"])
 async def root():
