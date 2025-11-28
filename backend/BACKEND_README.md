@@ -102,6 +102,15 @@ backend/
 - Response management
 - Rating system
 
+### 8. Skin Scan (AI-Powered)
+- Image upload analysis (JPEG, PNG)
+- URL-based image analysis
+- AI skin type classification (oily, dry, combination, normal, sensitive)
+- Skin concern detection (acne, wrinkles, dark spots, redness, etc.)
+- Comprehensive skin metrics (hydration, oiliness, texture, elasticity, pore size)
+- Personalized recommendations based on analysis
+- Health check endpoint for service monitoring
+
 ## API Endpoints
 
 ### Authentication
@@ -159,6 +168,13 @@ POST   /api/v1/dermatologist/consult           - Create consultation
 GET    /api/v1/dermatologist/consultations    - List consultations
 GET    /api/v1/dermatologist/consultations/{id} - Get consultation
 POST   /api/v1/dermatologist/consultations/{id}/rate - Rate response
+
+### Skin Scan
+```
+POST   /api/v1/skin-scan/analyze      - Analyze skin from uploaded image
+POST   /api/v1/skin-scan/analyze-url  - Analyze skin from image URL
+GET    /api/v1/skin-scan/health       - Health check for skin scan service
+```
 ```
 
 ## Setup Instructions
