@@ -2,14 +2,17 @@
 
 This module provides a clean API endpoint that uses the
 skin_analysis_service for actual AI-powered skin analysis.
+Includes face detection validation to ensure proper input.
 """
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from fastapi.responses import JSONResponse
 from typing import Optional
 import base64
 import logging
+import io
 
 from app.services.skin_analysis_service import skin_analysis_service
+from app.services.face_detection_service import detect_face_in_image
 
 logger = logging.getLogger(__name__)
 
@@ -23,11 +26,11 @@ async def analyze_skin(
 ):
     """
     Analyze skin from uploaded image using AI.
-    
+
     Args:
         file: Image file (JPEG, PNG)
         user_id: Optional user ID for tracking
-    
+
     Returns:
         Complete skin analysis with:
         - Overall health score (0-100)
@@ -43,20 +46,36 @@ async def analyze_skin(
             status_code=400,
             detail=f"Invalid file type. Allowed: {allowed_types}"
         )
-    
+
     try:
         # Read image data
         image_data = await file.read()
         
+        # Validate minimum file size (at least 1KB)
+        if len(image_data) < 1024:
+            raise HTTPException(
+                status_code=400,
+                detail="Image file is too small. Please upload a valid image."
+            )
+        
+        # Perform face detection validation
+        face_detected = await detect_face_in_image(image_data)
+        
+        if not face_detected:
+            raise HTTPException(
+                status_code=400,
+                detail="No face detected in the image. Please upload a clear photo of your face for skin analysis."
+            )
+
         # Convert to base64
         image_base64 = base64.b64encode(image_data).decode("utf-8")
-        
+
         # Call the skin analysis service
         result = await skin_analysis_service.analyze_skin(
             image_base64=image_base64,
             user_id=user_id
         )
-        
+
         return JSONResponse(
             status_code=200,
             content={
@@ -89,7 +108,9 @@ async def analyze_skin(
                 }
             }
         )
-        
+
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Skin analysis failed: {str(e)}")
         raise HTTPException(
@@ -105,11 +126,11 @@ async def analyze_skin_from_url(
 ):
     """
     Analyze skin from image URL.
-    
+
     Args:
         image_url: Public URL of the image
         user_id: Optional user ID for tracking
-    
+
     Returns:
         Complete skin analysis results
     """
@@ -118,7 +139,7 @@ async def analyze_skin_from_url(
             image_url=image_url,
             user_id=user_id
         )
-        
+
         return JSONResponse(
             status_code=200,
             content={
@@ -151,16 +172,10 @@ async def analyze_skin_from_url(
                 }
             }
         )
-        
+
     except Exception as e:
         logger.error(f"Skin analysis from URL failed: {str(e)}")
         raise HTTPException(
             status_code=500,
             detail=f"Analysis failed: {str(e)}"
         )
-
-
-@router.get("/health")
-async def health_check():
-    """Health check endpoint for the skin scan service."""
-    return {"status": "healthy", "service": "skin-scan"}
