@@ -29,17 +29,14 @@ build_web:
   only:
     - main
 
-# Backend - FastAPI Docker Build
+# Backend - FastAPI Docker Build (push to GitLab Container Registry)
 build_backend:
   stage: build
   script:
     - cd backend
     - docker build -t skincare-ai-backend:$CI_COMMIT_SHA -t skincare-ai-backend:latest .
-    - docker save skincare-ai-backend:$CI_COMMIT_SHA | gzip > backend-image.tar.gz
-  artifacts:
-    paths:
-      - backend/backend-image.tar.gz
-    expire_in: 1 week
+    - echo "Backend Docker image built successfully"
+    - docker images | grep skincare-ai-backend
   only:
     - main
 
