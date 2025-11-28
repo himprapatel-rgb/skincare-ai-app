@@ -227,6 +227,40 @@ Comprehensive documentation is available in the `/docs` directory:
 
 🌐 **Web App**: [https://himprapatel-project-20fc64.gitlab.io/](https://himprapatel-project-20fc64.gitlab.io/)
 
+## Data Sources & Licenses
+
+### Product Scan Database (Open Beauty Facts)
+
+This app uses only free and open data for cosmetic product information.
+
+- **Data source:**  
+  "This app uses the Open Beauty Facts / Open Food Facts database to retrieve cosmetic product data (barcode, product name, brand, ingredient list, images)."
+
+- **License:**  
+  "Open Beauty Facts data is published as Open Data under the Open Database License (ODbL). The data is free to reuse for any purpose, including commercial, provided that attribution is given and any public derivative databases are shared under the same license."
+
+- **Attribution text to include in the app and README:**  
+  "Contains information from Open Beauty Facts, which is made available under the Open Database License (ODbL). © Open Beauty Facts contributors – https://world.openbeautyfacts.org"
+
+- **How the app uses it:**  
+  "When a user scans a product barcode, the backend calls the Open Food/Beauty Facts API endpoint `/api/v0/product/{barcode}.json` to fetch product metadata and ingredient lists, which are then analyzed by the app's own scoring and recommendation logic."
+
+### Skin Image Analysis Datasets
+
+This app also relies on open dermatology image datasets to train the AI model that analyzes skin photos.
+
+- **Data source examples:**  
+  "The skin-image analysis model is trained and evaluated using public datasets from the International Skin Imaging Collaboration (ISIC), including the SLICE‑3D dataset and its SLICE‑3D Permissive subset, which provide labeled images of skin lesions and conditions."
+
+- **License:**  
+  "ISIC datasets are licensed per contributing institution under Creative Commons terms (CC0, CC‑BY, or CC‑BY‑NC). The SLICE‑3D Permissive subset is released under the CC‑BY license, which allows reuse with attribution."
+
+- **Attribution (example wording):**  
+  "This project uses dermatology image data from the International Skin Imaging Collaboration (ISIC), including the SLICE‑3D Permissive subset, used under the terms of the Creative Commons licenses specified for each dataset."
+
+- **How the app uses it:**  
+  "These datasets are used only to train and validate the machine learning models that estimate skin conditions (e.g., acne, redness, lesions) from user photos. In production, the app processes user images with the trained model; user images are not added to public datasets."
+
 ---
 
 ## Contributing
