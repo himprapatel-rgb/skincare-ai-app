@@ -9,6 +9,25 @@ An advanced AI-powered skin analysis and personalized skincare recommendation ap
 
 This application uses computer vision and machine learning to analyze skin conditions, detect issues like acne, pigmentation, and wrinkles, and provide personalized skincare recommendations. The app supports iOS, Android, and Web platforms.
 
+
+## Zero-Cost Architecture
+
+This app is built with a **zero-cost infrastructure** - all AI processing runs on-device!
+
+| Platform | Hosting | AI Processing | Database | Cost |
+|----------|---------|---------------|----------|------|
+| **Web** | GitHub Pages | TensorFlow.js (browser) | Bundled JSON | **$0** |
+| **iOS** | App bundle | TensorFlow Lite | Bundled JSON | **$0** |
+| **Android** | App bundle | TensorFlow Lite | Bundled JSON | **$0** |
+
+### Benefits
+- **Privacy-first**: Photos never leave the device
+- **Offline capable**: Works without internet
+- **Infinite scale**: More users = no extra server costs
+- **Fast response**: No network latency
+
+See [ZERO_COST_ARCHITECTURE.md](docs/ZERO_COST_ARCHITECTURE.md) for full technical details.
+
 ## Key Features
 
 ### Skin Analysis
@@ -133,3 +152,4 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 *Built with ❤️ using Flutter, FastAPI, and AI*
 *Now hosted on GitHub with unlimited free CI/CD!*
+
