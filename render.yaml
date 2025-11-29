@@ -1,0 +1,37 @@
+# Render.com Deployment Configuration
+# This file enables one-click deployment of the backend API
+# 
+# To deploy:
+# 1. Fork this repository
+# 2. Connect to Render.com
+# 3. Select "New Web Service" and connect your GitHub repo
+# 4. Render will automatically detect this file and configure deployment
+
+services:
+  # Backend API Service
+  - type: web
+    name: skincare-ai-backend
+    env: python
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: ENVIRONMENT
+        value: production
+      - key: CORS_ORIGINS
+        value: "https://himprapatel-rgb.github.io,http://localhost:3000"
+      - key: LOG_LEVEL
+        value: INFO
+    autoDeploy: true
+
+# Notes:
+# - Free tier includes 750 hours/month
+# - Auto-sleeps after 15 min of inactivity on free tier
+# - First request after sleep takes ~30s to wake up
+# - Upgrade to paid plan for always-on service
