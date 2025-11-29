@@ -1,0 +1,70 @@
+{
+  "ingredients": [
+    {
+      "id": "ing_001",
+      "name": "Hyaluronic Acid",
+      "aliases": ["sodium hyaluronate", "HA"],
+      "category": "humectant",
+      "benefits": ["hydration", "plumping", "anti-aging"],
+      "skin_types": ["all"],
+      "safety_rating": 5,
+      "comedogenic_rating": 0
+    },
+    {
+      "id": "ing_002",
+      "name": "Niacinamide",
+      "aliases": ["vitamin B3", "nicotinamide"],
+      "category": "vitamin",
+      "benefits": ["pore_minimizing", "oil_control", "brightening"],
+      "skin_types": ["all"],
+      "safety_rating": 5,
+      "comedogenic_rating": 0
+    },
+    {
+      "id": "ing_003",
+      "name": "Retinol",
+      "aliases": ["vitamin A", "retinoid"],
+      "category": "anti-aging",
+      "benefits": ["anti-aging", "cell_turnover", "acne_treatment"],
+      "skin_types": ["normal", "oily", "combination"],
+      "safety_rating": 3,
+      "comedogenic_rating": 0,
+      "warnings": ["photosensitivity", "not_for_pregnancy"]
+    },
+    {
+      "id": "ing_004",
+      "name": "Salicylic Acid",
+      "aliases": ["BHA", "beta hydroxy acid"],
+      "category": "exfoliant",
+      "benefits": ["acne_treatment", "pore_cleansing", "exfoliation"],
+      "skin_types": ["oily", "acne-prone"],
+      "safety_rating": 4,
+      "comedogenic_rating": 0
+    },
+    {
+      "id": "ing_005",
+      "name": "Vitamin C",
+      "aliases": ["ascorbic acid", "L-ascorbic acid"],
+      "category": "antioxidant",
+      "benefits": ["brightening", "anti-aging", "sun_damage_repair"],
+      "skin_types": ["all"],
+      "safety_rating": 4,
+      "comedogenic_rating": 0
+    },
+    {
+      "id": "ing_006",
+      "name": "Ceramides",
+      "aliases": ["ceramide NP", "ceramide AP"],
+      "category": "lipid",
+      "benefits": ["barrier_repair", "moisturizing", "protection"],
+      "skin_types": ["all", "dry", "sensitive"],
+      "safety_rating": 5,
+      "comedogenic_rating": 0
+    }
+  ],
+  "ingredient_conflicts": [
+    {"ingredients": ["retinol", "vitamin_c"], "reason": "pH incompatibility"},
+    {"ingredients": ["retinol", "benzoyl_peroxide"], "reason": "deactivation"},
+    {"ingredients": ["AHA", "BHA", "retinol"], "reason": "over-exfoliation"}
+  ]
+}
