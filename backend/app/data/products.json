@@ -1,0 +1,67 @@
+{
+  "products": [
+    {
+      "id": "prod_001",
+      "name": "Gentle Foaming Cleanser",
+      "brand": "CeraVe",
+      "category": "cleanser",
+      "skin_types": ["normal", "oily", "combination"],
+      "concerns": ["acne", "excess_oil"],
+      "ingredients": ["niacinamide", "hyaluronic_acid", "ceramides"],
+      "price": 14.99,
+      "rating": 4.5,
+      "image_url": "/assets/products/cerave_cleanser.jpg"
+    },
+    {
+      "id": "prod_002",
+      "name": "Hydrating Facial Moisturizer",
+      "brand": "Neutrogena",
+      "category": "moisturizer",
+      "skin_types": ["dry", "normal", "sensitive"],
+      "concerns": ["dryness", "dehydration"],
+      "ingredients": ["hyaluronic_acid", "glycerin"],
+      "price": 18.99,
+      "rating": 4.3,
+      "image_url": "/assets/products/neutrogena_moisturizer.jpg"
+    },
+    {
+      "id": "prod_003",
+      "name": "Vitamin C Brightening Serum",
+      "brand": "The Ordinary",
+      "category": "serum",
+      "skin_types": ["all"],
+      "concerns": ["dark_spots", "dullness", "uneven_tone"],
+      "ingredients": ["vitamin_c", "vitamin_e", "ferulic_acid"],
+      "price": 12.50,
+      "rating": 4.7,
+      "image_url": "/assets/products/ordinary_vitamin_c.jpg"
+    },
+    {
+      "id": "prod_004",
+      "name": "Retinol Night Cream",
+      "brand": "La Roche-Posay",
+      "category": "treatment",
+      "skin_types": ["normal", "oily", "combination"],
+      "concerns": ["aging", "wrinkles", "fine_lines"],
+      "ingredients": ["retinol", "niacinamide", "shea_butter"],
+      "price": 34.99,
+      "rating": 4.6,
+      "image_url": "/assets/products/laroche_retinol.jpg"
+    },
+    {
+      "id": "prod_005",
+      "name": "SPF 50 Sunscreen",
+      "brand": "EltaMD",
+      "category": "sunscreen",
+      "skin_types": ["all"],
+      "concerns": ["sun_protection", "aging"],
+      "ingredients": ["zinc_oxide", "niacinamide"],
+      "price": 39.00,
+      "rating": 4.8,
+      "image_url": "/assets/products/eltamd_sunscreen.jpg"
+    }
+  ],
+  "categories": ["cleanser", "moisturizer", "serum", "treatment", "sunscreen", "toner", "mask"],
+  "skin_types": ["normal", "dry", "oily", "combination", "sensitive"],
+  "concerns": ["acne", "aging", "dark_spots", "dryness", "dullness", "excess_oil", "fine_lines", "sensitivity", "wrinkles"]
+}
