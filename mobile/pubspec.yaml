@@ -21,4 +21,9 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
+
   uses-material-design: true
+  assets:
+    - assets/data/products.json
+    - assets/data/ingredients.json
+    - assets/data/skin_conditions.json
