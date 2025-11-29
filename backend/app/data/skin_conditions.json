@@ -1,0 +1,50 @@
+{
+  "skin_conditions": [
+    {
+      "id": "cond_001",
+      "name": "Acne",
+      "severity_levels": ["mild", "moderate", "severe"],
+      "symptoms": ["pimples", "blackheads", "whiteheads", "cysts"],
+      "recommended_ingredients": ["salicylic_acid", "benzoyl_peroxide", "niacinamide", "tea_tree_oil"],
+      "avoid_ingredients": ["coconut_oil", "cocoa_butter"],
+      "treatment_duration": "4-12 weeks"
+    },
+    {
+      "id": "cond_002",
+      "name": "Dryness",
+      "severity_levels": ["mild", "moderate", "severe"],
+      "symptoms": ["flaking", "tightness", "rough_texture", "itching"],
+      "recommended_ingredients": ["hyaluronic_acid", "glycerin", "ceramides", "squalane"],
+      "avoid_ingredients": ["alcohol", "fragrance"],
+      "treatment_duration": "2-4 weeks"
+    },
+    {
+      "id": "cond_003",
+      "name": "Hyperpigmentation",
+      "severity_levels": ["mild", "moderate", "severe"],
+      "symptoms": ["dark_spots", "uneven_tone", "melasma"],
+      "recommended_ingredients": ["vitamin_c", "niacinamide", "alpha_arbutin", "kojic_acid"],
+      "avoid_ingredients": ["photosensitizing_ingredients"],
+      "treatment_duration": "8-16 weeks"
+    },
+    {
+      "id": "cond_004",
+      "name": "Aging Signs",
+      "severity_levels": ["early", "moderate", "advanced"],
+      "symptoms": ["fine_lines", "wrinkles", "sagging", "loss_of_elasticity"],
+      "recommended_ingredients": ["retinol", "peptides", "vitamin_c", "hyaluronic_acid"],
+      "avoid_ingredients": ["harsh_exfoliants"],
+      "treatment_duration": "12-24 weeks"
+    },
+    {
+      "id": "cond_005",
+      "name": "Sensitivity",
+      "severity_levels": ["mild", "moderate", "severe"],
+      "symptoms": ["redness", "burning", "stinging", "reactive_skin"],
+      "recommended_ingredients": ["centella_asiatica", "aloe_vera", "oat_extract", "allantoin"],
+      "avoid_ingredients": ["fragrance", "alcohol", "essential_oils"],
+      "treatment_duration": "ongoing"
+    }
+  ],
+  "analysis_zones": ["forehead", "nose", "cheeks", "chin", "under_eyes", "jawline"]
+}
