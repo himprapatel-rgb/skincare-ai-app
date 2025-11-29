@@ -25,20 +25,27 @@ class SkinAnalysisService {
 
   /// Analyze skin from image bytes
   /// Returns comprehensive skin analysis results
+  /// CRITICAL: First validates that a face is present in the image
   Future<SkinAnalysisResult> analyzeImage(Uint8List imageBytes) async {
     if (!_isInitialized) {
       await initialize();
     }
 
     try {
-      // Detect face first
-      final faces = await _faceDetection.detectFaces(imageBytes);
+      // STEP 1: Validate face is present using ML Kit
+      final faceResult = await _faceDetection.detectFaces(imageBytes);
       
-      if (faces.isEmpty) {
-        return SkinAnalysisResult.noFaceDetected();
+      // NO FACE DETECTED - Return error immediately
+      if (!faceResult.success || faceResult.faces.isEmpty) {
+        debugPrint('SkinAnalysisService: NO FACE DETECTED - Rejecting image');
+        return SkinAnalysisResult.noFaceDetected(
+          faceResult.errorMessage ?? 'No face detected in image. Please upload a clear selfie.',
+        );
       }
 
-      final face = faces.first;
+      debugPrint('SkinAnalysisService: Face validated, proceeding with analysis');
+      
+      final face = faceResult.faces.first;
       final zones = _faceDetection.getSkinAnalysisZones(face);
 
       // Analyze each zone (simulated for now, will use TFLite)
@@ -232,10 +239,10 @@ class SkinAnalysisResult {
     this.recommendations = const [],
   });
 
-  factory SkinAnalysisResult.noFaceDetected() {
+  factory SkinAnalysisResult.noFaceDetected([String? message]) {
     return SkinAnalysisResult(
       success: false,
-      errorMessage: 'No face detected in image',
+      errorMessage: message ?? 'No face detected in image. Please upload a clear selfie with your face visible.',
     );
   }
 
@@ -245,6 +252,9 @@ class SkinAnalysisResult {
       errorMessage: message,
     );
   }
+  
+  /// Check if this result indicates no face was detected
+  bool get isNoFaceError => !success && (errorMessage?.toLowerCase().contains('face') ?? false);
 }
 
 /// Analysis results for a specific face zone
